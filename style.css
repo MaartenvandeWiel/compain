@@ -1,0 +1,175 @@
+/* Sultan-palet uit het huisstijl-startpakket, plus een donkere variant voor de nacht. */
+:root {
+  --koolzwart: #1A1613;
+  --grill: #D2461E;
+  --vlam: #F28C28;
+  --saffraan: #E8B04B;
+  --pita: #F3E3C6;
+  --room: #FBF6EE;
+  --peterselie: #4A7C3F;
+
+  --bg: var(--room);
+  --vlak: #FFFFFF;
+  --tekst: var(--koolzwart);
+  --tekst-zacht: #6B5F55;
+  --lijn: #E9DCC6;
+  --accent: var(--grill);
+  --accent-zacht: #F6D2C3;
+  --vorig: #C9B79C;
+  --goed: var(--peterselie);
+  --slecht: var(--grill);
+
+  --font: "Archivo", system-ui, sans-serif;
+  --radius: 6px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14110F;
+    --vlak: #1F1A16;
+    --tekst: var(--room);
+    --tekst-zacht: #B3A595;
+    --lijn: #3A312A;
+    --accent: var(--vlam);
+    --accent-zacht: #4A2A17;
+    --vorig: #6E5E4E;
+    --goed: #7FB36F;
+    --slecht: var(--vlam);
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--tekst);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+h1, h2 { margin: 0; font-stretch: 85%; }
+h1 { font-size: 1.75rem; font-weight: 900; letter-spacing: -0.01em; }
+h2 { font-size: 1.15rem; font-weight: 800; }
+
+.kop, main, .voet { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+
+.kop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 28px;
+  padding-bottom: 20px;
+}
+.kop-merk { display: flex; align-items: center; gap: 14px; }
+.kop-merk img { border-radius: var(--radius); }
+.kop-sub { margin: 2px 0 0; color: var(--tekst-zacht); }
+
+.jaren { display: flex; flex-wrap: wrap; gap: 4px; background: var(--vlak); border: 1px solid var(--lijn); border-radius: var(--radius); padding: 4px; }
+.jaren button {
+  font: inherit;
+  font-weight: 700;
+  border: 0;
+  border-radius: 4px;
+  padding: 8px 12px;
+  background: transparent;
+  color: var(--tekst);
+  cursor: pointer;
+}
+.jaren button:hover { background: var(--accent-zacht); }
+.jaren button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.jaren button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+main {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 16px;
+}
+main[aria-busy="true"] { opacity: 0.4; }
+
+.kerngetallen {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.kerngetal, .kaart {
+  min-width: 0;
+  background: var(--vlak);
+  border: 1px solid var(--lijn);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+.kerngetal { border-top: 4px solid var(--accent); }
+.kerngetal-label { margin: 0; color: var(--tekst-zacht); font-weight: 600; font-size: 0.9rem; }
+.kerngetal-waarde { margin: 4px 0 6px; font-size: 2rem; font-weight: 900; font-stretch: 80%; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.kerngetal-delta { margin: 0; font-size: 0.875rem; font-weight: 700; color: var(--tekst-zacht); }
+.kerngetal-delta.op { color: var(--goed); }
+.kerngetal-delta.neer { color: var(--slecht); }
+
+.kaart-breed { grid-column: 1 / -1; }
+.kaart:not(.kaart-breed):not(.kaart-top):not(.kaart-dranken) { grid-column: span 5; }
+.kaart-top { grid-column: span 7; grid-row: span 2; }
+.kaart-dranken { grid-column: span 5; }
+
+.kaart-kop { margin-bottom: 12px; }
+.kaart-sub { margin: 2px 0 0; color: var(--tekst-zacht); font-size: 0.9rem; }
+
+.grafiek { position: relative; }
+.grafiek-maand { height: 300px; }
+.grafiek-weekdag { height: 260px; }
+
+.toplijst { list-style: none; margin: 0; padding: 0; counter-reset: plek; }
+.toplijst li {
+  counter-increment: plek;
+  display: grid;
+  grid-template-columns: 2rem 1fr auto;
+  align-items: center;
+  gap: 4px 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--lijn);
+}
+.toplijst li:last-child { border-bottom: 0; }
+.toplijst li::before { content: counter(plek); font-weight: 900; font-stretch: 80%; font-size: 1.15rem; color: var(--accent); }
+.top-naam { font-weight: 700; }
+.top-cat { color: var(--tekst-zacht); font-weight: 400; font-size: 0.85rem; }
+.top-omzet { font-weight: 800; font-variant-numeric: tabular-nums; text-align: right; }
+.top-aantal { display: block; color: var(--tekst-zacht); font-weight: 400; font-size: 0.8rem; }
+.top-balk { grid-column: 2 / -1; height: 6px; background: var(--lijn); border-radius: 3px; overflow: hidden; }
+.top-balk span { display: block; height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.4s ease; }
+
+.dranken { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.dranken li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--bg);
+  border-radius: var(--radius);
+  border-left: 4px solid var(--saffraan);
+}
+.dranken .top-naam { font-size: 1.05rem; }
+
+.voet { padding-top: 24px; padding-bottom: 40px; color: var(--tekst-zacht); font-size: 0.85rem; }
+
+@media (max-width: 900px) {
+  .kerngetallen { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kaart:not(.kaart-breed):not(.kaart-top):not(.kaart-dranken),
+  .kaart-top, .kaart-dranken { grid-column: 1 / -1; grid-row: auto; }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 1.4rem; }
+  .kerngetallen { gap: 10px; }
+  .kerngetal { padding: 14px; }
+  .kerngetal-waarde { font-size: 1.5rem; }
+  .jaren { width: 100%; }
+  .jaren button { flex: 1; padding: 8px 4px; }
+  .grafiek-maand { height: 240px; }
+  .toplijst .top-cat { display: block; }
+}

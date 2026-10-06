@@ -1,0 +1,928 @@
+{
+ "bron": "Grillroom Sultan, synthetische oefendata van de Compain AI-dag",
+ "bijgewerkt": "2026-10-06",
+ "weekdagen": [
+  "maandag",
+  "dinsdag",
+  "woensdag",
+  "donderdag",
+  "vrijdag",
+  "zaterdag",
+  "zondag"
+ ],
+ "jaren": [
+  2021,
+  2022,
+  2023,
+  2024,
+  2025
+ ],
+ "per_jaar": {
+  "2021": {
+   "kerngetallen": {
+    "omzet": 519800.87,
+    "orders": 25880,
+    "gem_bon": 20.09,
+    "netto": 479931.81
+   },
+   "maand": [
+    49580.32,
+    44918.88,
+    46484.53,
+    42759.62,
+    49740.68,
+    40490.19,
+    39701.81,
+    34814.71,
+    39337.84,
+    42586.29,
+    40059.98,
+    49326.02
+   ],
+   "weekdag": [
+    41337.91,
+    41904.71,
+    52008.27,
+    81501.79,
+    109867.5,
+    120821.68,
+    72359.01
+   ],
+   "top_gerechten": [
+    {
+     "naam": "Friet groot",
+     "categorie": "Friet en snacks",
+     "aantal": 9763,
+     "omzet": 31729.75
+    },
+    {
+     "naam": "Kapsalon groot",
+     "categorie": "Kapsalon",
+     "aantal": 3306,
+     "omzet": 31407.0
+    },
+    {
+     "naam": "Broodje shoarma",
+     "categorie": "Broodjes",
+     "aantal": 4433,
+     "omzet": 24381.5
+    },
+    {
+     "naam": "Friet speciaal",
+     "categorie": "Friet en snacks",
+     "aantal": 5715,
+     "omzet": 21431.25
+    },
+    {
+     "naam": "Friet klein",
+     "categorie": "Friet en snacks",
+     "aantal": 7707,
+     "omzet": 19267.5
+    },
+    {
+     "naam": "Kapsalon klein",
+     "categorie": "Kapsalon",
+     "aantal": 2393,
+     "omzet": 17947.5
+    },
+    {
+     "naam": "Shoarmaschotel",
+     "categorie": "Schotels",
+     "aantal": 1432,
+     "omzet": 17900.0
+    },
+    {
+     "naam": "Menu kapsalon + drinken",
+     "categorie": "Combideals",
+     "aantal": 1468,
+     "omzet": 16882.0
+    },
+    {
+     "naam": "Familiedeal 2 schotels + 2 friet + fles",
+     "categorie": "Combideals",
+     "aantal": 572,
+     "omzet": 16874.0
+    },
+    {
+     "naam": "Broodje shoarma speciaal",
+     "categorie": "Broodjes",
+     "aantal": 2552,
+     "omzet": 16588.0
+    }
+   ],
+   "top_dranken": [
+    {
+     "naam": "Frisdrank blik 33cl",
+     "categorie": "Dranken",
+     "aantal": 8674,
+     "omzet": 15613.2
+    },
+    {
+     "naam": "Frisdrank fles 50cl",
+     "categorie": "Dranken",
+     "aantal": 5014,
+     "omzet": 12535.0
+    },
+    {
+     "naam": "Ice tea 50cl",
+     "categorie": "Dranken",
+     "aantal": 3420,
+     "omzet": 8550.0
+    }
+   ]
+  },
+  "2022": {
+   "kerngetallen": {
+    "omzet": 610496.56,
+    "orders": 30440,
+    "gem_bon": 20.06,
+    "netto": 563705.48
+   },
+   "maand": [
+    52036.36,
+    46357.39,
+    46739.76,
+    45071.35,
+    52483.0,
+    49905.99,
+    52579.73,
+    45456.39,
+    54297.83,
+    51634.02,
+    53597.36,
+    60337.38
+   ],
+   "weekdag": [
+    46277.29,
+    50153.91,
+    60863.95,
+    89543.83,
+    130210.77,
+    149546.97,
+    83899.84
+   ],
+   "top_gerechten": [
+    {
+     "naam": "Kapsalon groot",
+     "categorie": "Kapsalon",
+     "aantal": 3804,
+     "omzet": 36721.5
+    },
+    {
+     "naam": "Friet groot",
+     "categorie": "Friet en snacks",
+     "aantal": 10654,
+     "omzet": 35156.4
+    },
+    {
+     "naam": "Broodje shoarma",
+     "categorie": "Broodjes",
+     "aantal": 5121,
+     "omzet": 28562.55
+    },
+    {
+     "naam": "Friet speciaal",
+     "categorie": "Friet en snacks",
+     "aantal": 6265,
+     "omzet": 23800.45
+    },
+    {
+     "naam": "Kapsalon klein",
+     "categorie": "Kapsalon",
+     "aantal": 2887,
+     "omzet": 21946.1
+    },
+    {
+     "naam": "Friet klein",
+     "categorie": "Friet en snacks",
+     "aantal": 8320,
+     "omzet": 21199.8
+    },
+    {
+     "naam": "Shoarmaschotel",
+     "categorie": "Schotels",
+     "aantal": 1574,
+     "omzet": 19995.0
+    },
+    {
+     "naam": "Familiedeal 2 schotels + 2 friet + fles",
+     "categorie": "Combideals",
+     "aantal": 650,
+     "omzet": 19485.5
+    },
+    {
+     "naam": "Broodje shoarma speciaal",
+     "categorie": "Broodjes",
+     "aantal": 2892,
+     "omzet": 19090.6
+    },
+    {
+     "naam": "Menu kapsalon + drinken",
+     "categorie": "Combideals",
+     "aantal": 1627,
+     "omzet": 18990.85
+    }
+   ],
+   "top_dranken": [
+    {
+     "naam": "Frisdrank blik 33cl",
+     "categorie": "Dranken",
+     "aantal": 10286,
+     "omzet": 19048.2
+    },
+    {
+     "naam": "Frisdrank fles 50cl",
+     "categorie": "Dranken",
+     "aantal": 5825,
+     "omzet": 14860.7
+    },
+    {
+     "naam": "Ice tea 50cl",
+     "categorie": "Dranken",
+     "aantal": 3892,
+     "omzet": 9928.2
+    }
+   ]
+  },
+  "2023": {
+   "kerngetallen": {
+    "omzet": 672196.02,
+    "orders": 30177,
+    "gem_bon": 22.28,
+    "netto": 623243.25
+   },
+   "maand": [
+    55337.01,
+    45480.57,
+    53286.38,
+    54028.46,
+    62708.58,
+    56019.64,
+    55848.76,
+    49400.44,
+    63853.04,
+    55413.89,
+    57795.83,
+    63023.42
+   ],
+   "weekdag": [
+    50801.96,
+    53738.83,
+    69002.82,
+    101230.04,
+    141339.52,
+    159630.23,
+    96452.62
+   ],
+   "top_gerechten": [
+    {
+     "naam": "Kapsalon groot",
+     "categorie": "Kapsalon",
+     "aantal": 3850,
+     "omzet": 41002.5
+    },
+    {
+     "naam": "Friet groot",
+     "categorie": "Friet en snacks",
+     "aantal": 9776,
+     "omzet": 35682.4
+    },
+    {
+     "naam": "Broodje shoarma",
+     "categorie": "Broodjes",
+     "aantal": 5258,
+     "omzet": 32336.7
+    },
+    {
+     "naam": "Kapsalon klein",
+     "categorie": "Kapsalon",
+     "aantal": 2801,
+     "omzet": 23528.4
+    },
+    {
+     "naam": "Friet speciaal",
+     "categorie": "Friet en snacks",
+     "aantal": 5443,
+     "omzet": 22860.6
+    },
+    {
+     "naam": "Shoarmaschotel",
+     "categorie": "Schotels",
+     "aantal": 1618,
+     "omzet": 22732.9
+    },
+    {
+     "naam": "Friet klein",
+     "categorie": "Friet en snacks",
+     "aantal": 7791,
+     "omzet": 21814.8
+    },
+    {
+     "naam": "Broodje shoarma speciaal",
+     "categorie": "Broodjes",
+     "aantal": 2905,
+     "omzet": 21206.5
+    },
+    {
+     "naam": "Familiedeal 2 schotels + 2 friet + fles",
+     "categorie": "Combideals",
+     "aantal": 617,
+     "omzet": 20422.7
+    },
+    {
+     "naam": "Durum shoarma",
+     "categorie": "Broodjes",
+     "aantal": 2422,
+     "omzet": 20344.8
+    }
+   ],
+   "top_dranken": [
+    {
+     "naam": "Frisdrank blik 33cl",
+     "categorie": "Dranken",
+     "aantal": 10177,
+     "omzet": 20354.0
+    },
+    {
+     "naam": "Frisdrank fles 50cl",
+     "categorie": "Dranken",
+     "aantal": 5758,
+     "omzet": 16122.4
+    },
+    {
+     "naam": "Ice tea 50cl",
+     "categorie": "Dranken",
+     "aantal": 3978,
+     "omzet": 11138.4
+    }
+   ]
+  },
+  "2024": {
+   "kerngetallen": {
+    "omzet": 715372.59,
+    "orders": 30844,
+    "gem_bon": 23.19,
+    "netto": 665489.84
+   },
+   "maand": [
+    56313.78,
+    54714.13,
+    57326.22,
+    57016.95,
+    60672.33,
+    63401.99,
+    59447.94,
+    57015.21,
+    61211.95,
+    56910.46,
+    66854.9,
+    64486.73
+   ],
+   "weekdag": [
+    58329.51,
+    58225.53,
+    70618.79,
+    105884.78,
+    153261.57,
+    170598.73,
+    98453.68
+   ],
+   "top_gerechten": [
+    {
+     "naam": "Kapsalon groot",
+     "categorie": "Kapsalon",
+     "aantal": 3880,
+     "omzet": 43068.0
+    },
+    {
+     "naam": "Friet groot",
+     "categorie": "Friet en snacks",
+     "aantal": 10064,
+     "omzet": 38243.2
+    },
+    {
+     "naam": "Broodje shoarma",
+     "categorie": "Broodjes",
+     "aantal": 5347,
+     "omzet": 34220.8
+    },
+    {
+     "naam": "Kapsalon klein",
+     "categorie": "Kapsalon",
+     "aantal": 2913,
+     "omzet": 25488.75
+    },
+    {
+     "naam": "Friet speciaal",
+     "categorie": "Friet en snacks",
+     "aantal": 5682,
+     "omzet": 25000.8
+    },
+    {
+     "naam": "Familiedeal 2 schotels + 2 friet + fles",
+     "categorie": "Combideals",
+     "aantal": 669,
+     "omzet": 23047.05
+    },
+    {
+     "naam": "Friet klein",
+     "categorie": "Friet en snacks",
+     "aantal": 7941,
+     "omzet": 23028.9
+    },
+    {
+     "naam": "Shoarmaschotel",
+     "categorie": "Schotels",
+     "aantal": 1577,
+     "omzet": 23024.2
+    },
+    {
+     "naam": "Broodje shoarma speciaal",
+     "categorie": "Broodjes",
+     "aantal": 2980,
+     "omzet": 22648.0
+    },
+    {
+     "naam": "Menu kapsalon + drinken",
+     "categorie": "Combideals",
+     "aantal": 1663,
+     "omzet": 22367.35
+    }
+   ],
+   "top_dranken": [
+    {
+     "naam": "Frisdrank blik 33cl",
+     "categorie": "Dranken",
+     "aantal": 10476,
+     "omzet": 21999.6
+    },
+    {
+     "naam": "Frisdrank fles 50cl",
+     "categorie": "Dranken",
+     "aantal": 6204,
+     "omzet": 17991.6
+    },
+    {
+     "naam": "Ice tea 50cl",
+     "categorie": "Dranken",
+     "aantal": 3877,
+     "omzet": 11243.3
+    }
+   ]
+  },
+  "2025": {
+   "kerngetallen": {
+    "omzet": 744877.6,
+    "orders": 31232,
+    "gem_bon": 23.85,
+    "netto": 694934.08
+   },
+   "maand": [
+    58847.31,
+    54895.09,
+    60322.97,
+    57136.09,
+    70609.23,
+    60489.94,
+    62699.22,
+    59041.59,
+    62574.57,
+    61443.4,
+    70991.43,
+    65826.76
+   ],
+   "weekdag": [
+    59853.53,
+    58357.44,
+    72984.44,
+    107575.73,
+    155255.45,
+    179938.44,
+    110912.57
+   ],
+   "top_gerechten": [
+    {
+     "naam": "Kapsalon groot",
+     "categorie": "Kapsalon",
+     "aantal": 3887,
+     "omzet": 44700.5
+    },
+    {
+     "naam": "Friet groot",
+     "categorie": "Friet en snacks",
+     "aantal": 9941,
+     "omzet": 39266.95
+    },
+    {
+     "naam": "Broodje shoarma",
+     "categorie": "Broodjes",
+     "aantal": 5374,
+     "omzet": 35737.1
+    },
+    {
+     "naam": "Friet speciaal",
+     "categorie": "Friet en snacks",
+     "aantal": 5908,
+     "omzet": 26881.4
+    },
+    {
+     "naam": "Kapsalon klein",
+     "categorie": "Kapsalon",
+     "aantal": 2864,
+     "omzet": 25919.2
+    },
+    {
+     "naam": "Shoarmaschotel",
+     "categorie": "Schotels",
+     "aantal": 1625,
+     "omzet": 24537.5
+    },
+    {
+     "naam": "Familiedeal 2 schotels + 2 friet + fles",
+     "categorie": "Combideals",
+     "aantal": 684,
+     "omzet": 24384.6
+    },
+    {
+     "naam": "Broodje shoarma speciaal",
+     "categorie": "Broodjes",
+     "aantal": 3018,
+     "omzet": 23691.3
+    },
+    {
+     "naam": "Friet klein",
+     "categorie": "Friet en snacks",
+     "aantal": 7778,
+     "omzet": 23334.0
+    },
+    {
+     "naam": "Menu kapsalon + drinken",
+     "categorie": "Combideals",
+     "aantal": 1628,
+     "omzet": 22629.2
+    }
+   ],
+   "top_dranken": [
+    {
+     "naam": "Frisdrank blik 33cl",
+     "categorie": "Dranken",
+     "aantal": 10554,
+     "omzet": 23218.8
+    },
+    {
+     "naam": "Frisdrank fles 50cl",
+     "categorie": "Dranken",
+     "aantal": 6112,
+     "omzet": 18336.0
+    },
+    {
+     "naam": "Ice tea 50cl",
+     "categorie": "Dranken",
+     "aantal": 3908,
+     "omzet": 11724.0
+    }
+   ]
+  }
+ },
+ "alle": {
+  "kerngetallen": {
+   "omzet": 3262743.64,
+   "orders": 148573,
+   "gem_bon": 21.96,
+   "netto": 3027304.46
+  },
+  "maand": [
+   {
+    "periode": "2021-01",
+    "omzet": 49580.32
+   },
+   {
+    "periode": "2021-02",
+    "omzet": 44918.88
+   },
+   {
+    "periode": "2021-03",
+    "omzet": 46484.53
+   },
+   {
+    "periode": "2021-04",
+    "omzet": 42759.62
+   },
+   {
+    "periode": "2021-05",
+    "omzet": 49740.68
+   },
+   {
+    "periode": "2021-06",
+    "omzet": 40490.19
+   },
+   {
+    "periode": "2021-07",
+    "omzet": 39701.81
+   },
+   {
+    "periode": "2021-08",
+    "omzet": 34814.71
+   },
+   {
+    "periode": "2021-09",
+    "omzet": 39337.84
+   },
+   {
+    "periode": "2021-10",
+    "omzet": 42586.29
+   },
+   {
+    "periode": "2021-11",
+    "omzet": 40059.98
+   },
+   {
+    "periode": "2021-12",
+    "omzet": 49326.02
+   },
+   {
+    "periode": "2022-01",
+    "omzet": 52036.36
+   },
+   {
+    "periode": "2022-02",
+    "omzet": 46357.39
+   },
+   {
+    "periode": "2022-03",
+    "omzet": 46739.76
+   },
+   {
+    "periode": "2022-04",
+    "omzet": 45071.35
+   },
+   {
+    "periode": "2022-05",
+    "omzet": 52483.0
+   },
+   {
+    "periode": "2022-06",
+    "omzet": 49905.99
+   },
+   {
+    "periode": "2022-07",
+    "omzet": 52579.73
+   },
+   {
+    "periode": "2022-08",
+    "omzet": 45456.39
+   },
+   {
+    "periode": "2022-09",
+    "omzet": 54297.83
+   },
+   {
+    "periode": "2022-10",
+    "omzet": 51634.02
+   },
+   {
+    "periode": "2022-11",
+    "omzet": 53597.36
+   },
+   {
+    "periode": "2022-12",
+    "omzet": 60337.38
+   },
+   {
+    "periode": "2023-01",
+    "omzet": 55337.01
+   },
+   {
+    "periode": "2023-02",
+    "omzet": 45480.57
+   },
+   {
+    "periode": "2023-03",
+    "omzet": 53286.38
+   },
+   {
+    "periode": "2023-04",
+    "omzet": 54028.46
+   },
+   {
+    "periode": "2023-05",
+    "omzet": 62708.58
+   },
+   {
+    "periode": "2023-06",
+    "omzet": 56019.64
+   },
+   {
+    "periode": "2023-07",
+    "omzet": 55848.76
+   },
+   {
+    "periode": "2023-08",
+    "omzet": 49400.44
+   },
+   {
+    "periode": "2023-09",
+    "omzet": 63853.04
+   },
+   {
+    "periode": "2023-10",
+    "omzet": 55413.89
+   },
+   {
+    "periode": "2023-11",
+    "omzet": 57795.83
+   },
+   {
+    "periode": "2023-12",
+    "omzet": 63023.42
+   },
+   {
+    "periode": "2024-01",
+    "omzet": 56313.78
+   },
+   {
+    "periode": "2024-02",
+    "omzet": 54714.13
+   },
+   {
+    "periode": "2024-03",
+    "omzet": 57326.22
+   },
+   {
+    "periode": "2024-04",
+    "omzet": 57016.95
+   },
+   {
+    "periode": "2024-05",
+    "omzet": 60672.33
+   },
+   {
+    "periode": "2024-06",
+    "omzet": 63401.99
+   },
+   {
+    "periode": "2024-07",
+    "omzet": 59447.94
+   },
+   {
+    "periode": "2024-08",
+    "omzet": 57015.21
+   },
+   {
+    "periode": "2024-09",
+    "omzet": 61211.95
+   },
+   {
+    "periode": "2024-10",
+    "omzet": 56910.46
+   },
+   {
+    "periode": "2024-11",
+    "omzet": 66854.9
+   },
+   {
+    "periode": "2024-12",
+    "omzet": 64486.73
+   },
+   {
+    "periode": "2025-01",
+    "omzet": 58847.31
+   },
+   {
+    "periode": "2025-02",
+    "omzet": 54895.09
+   },
+   {
+    "periode": "2025-03",
+    "omzet": 60322.97
+   },
+   {
+    "periode": "2025-04",
+    "omzet": 57136.09
+   },
+   {
+    "periode": "2025-05",
+    "omzet": 70609.23
+   },
+   {
+    "periode": "2025-06",
+    "omzet": 60489.94
+   },
+   {
+    "periode": "2025-07",
+    "omzet": 62699.22
+   },
+   {
+    "periode": "2025-08",
+    "omzet": 59041.59
+   },
+   {
+    "periode": "2025-09",
+    "omzet": 62574.57
+   },
+   {
+    "periode": "2025-10",
+    "omzet": 61443.4
+   },
+   {
+    "periode": "2025-11",
+    "omzet": 70991.43
+   },
+   {
+    "periode": "2025-12",
+    "omzet": 65826.76
+   }
+  ],
+  "weekdag": [
+   256600.2,
+   262380.42,
+   325478.27,
+   485736.17,
+   689934.81,
+   780536.05,
+   462077.72
+  ],
+  "top_gerechten": [
+   {
+    "naam": "Kapsalon groot",
+    "categorie": "Kapsalon",
+    "aantal": 18727,
+    "omzet": 196899.5
+   },
+   {
+    "naam": "Friet groot",
+    "categorie": "Friet en snacks",
+    "aantal": 50198,
+    "omzet": 180078.7
+   },
+   {
+    "naam": "Broodje shoarma",
+    "categorie": "Broodjes",
+    "aantal": 25533,
+    "omzet": 155238.65
+   },
+   {
+    "naam": "Friet speciaal",
+    "categorie": "Friet en snacks",
+    "aantal": 29013,
+    "omzet": 119974.5
+   },
+   {
+    "naam": "Kapsalon klein",
+    "categorie": "Kapsalon",
+    "aantal": 13858,
+    "omzet": 114829.95
+   },
+   {
+    "naam": "Friet klein",
+    "categorie": "Friet en snacks",
+    "aantal": 39537,
+    "omzet": 108645.0
+   },
+   {
+    "naam": "Shoarmaschotel",
+    "categorie": "Schotels",
+    "aantal": 7826,
+    "omzet": 108189.6
+   },
+   {
+    "naam": "Familiedeal 2 schotels + 2 friet + fles",
+    "categorie": "Combideals",
+    "aantal": 3192,
+    "omzet": 104213.85
+   },
+   {
+    "naam": "Broodje shoarma speciaal",
+    "categorie": "Broodjes",
+    "aantal": 14347,
+    "omzet": 103224.4
+   },
+   {
+    "naam": "Menu kapsalon + drinken",
+    "categorie": "Combideals",
+    "aantal": 7960,
+    "omzet": 101174.0
+   }
+  ],
+  "top_dranken": [
+   {
+    "naam": "Frisdrank blik 33cl",
+    "categorie": "Dranken",
+    "aantal": 50167,
+    "omzet": 100233.8
+   },
+   {
+    "naam": "Frisdrank fles 50cl",
+    "categorie": "Dranken",
+    "aantal": 28913,
+    "omzet": 79845.7
+   },
+   {
+    "naam": "Ice tea 50cl",
+    "categorie": "Dranken",
+    "aantal": 19075,
+    "omzet": 52583.9
+   }
+  ]
+ }
+}

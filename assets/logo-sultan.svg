@@ -1,0 +1,10 @@
+<!-- Plaatshouder. Een spies met drie vlammen. Vervang dit; het is een schets van
+     vijf minuten en bedoeld om af te keuren. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="10" fill="#1A1613"/>
+  <path d="M32 12v34" stroke="#E8B04B" stroke-width="3" stroke-linecap="round"/>
+  <ellipse cx="32" cy="24" rx="9" ry="6" fill="#D2461E"/>
+  <ellipse cx="32" cy="33" rx="10" ry="6" fill="#E8761E"/>
+  <ellipse cx="32" cy="42" rx="8" ry="5" fill="#F28C28"/>
+  <path d="M22 52h20" stroke="#F3E3C6" stroke-width="3" stroke-linecap="round"/>
+</svg>

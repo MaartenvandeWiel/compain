@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sultan Dashboard</title>
+  <meta name="description" content="Omzet van Grillroom Sultan per jaar, maand en weekdag, plus de best verkochte gerechten en dranken.">
+  <link rel="icon" href="assets/logo-sultan.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="kop">
+    <div class="kop-merk">
+      <img src="assets/logo-sultan.svg" alt="" width="48" height="48">
+      <div>
+        <h1>Grillroom Sultan</h1>
+        <p class="kop-sub">Witte de Withstraat 78b, Rotterdam. Omzet in cijfers.</p>
+      </div>
+    </div>
+    <nav class="jaren" id="jaren" aria-label="Kies een jaar"></nav>
+  </header>
+
+  <main id="app" aria-busy="true">
+    <section class="kerngetallen" id="kerngetallen" aria-label="Kerngetallen"></section>
+
+    <section class="kaart kaart-breed">
+      <div class="kaart-kop">
+        <h2>Omzet per maand</h2>
+        <p class="kaart-sub" id="maand-sub"></p>
+      </div>
+      <div class="grafiek grafiek-maand"><canvas id="grafiek-maand" role="img" aria-label="Omzet per maand"></canvas></div>
+    </section>
+
+    <section class="kaart">
+      <div class="kaart-kop">
+        <h2>Omzet per weekdag</h2>
+        <p class="kaart-sub" id="weekdag-sub"></p>
+      </div>
+      <div class="grafiek grafiek-weekdag"><canvas id="grafiek-weekdag" role="img" aria-label="Omzet per weekdag"></canvas></div>
+    </section>
+
+    <section class="kaart kaart-top">
+      <div class="kaart-kop">
+        <h2>Top 10 gerechten</h2>
+        <p class="kaart-sub">Op omzet. Zonder dranken en sauzen.</p>
+      </div>
+      <ol class="toplijst" id="top-gerechten"></ol>
+    </section>
+
+    <section class="kaart kaart-dranken">
+      <div class="kaart-kop">
+        <h2>Top 3 dranken</h2>
+        <p class="kaart-sub">Geen alcohol. Nooit gehad.</p>
+      </div>
+      <ol class="dranken" id="top-dranken"></ol>
+    </section>
+  </main>
+
+  <footer class="voet">
+    <p>Synthetische oefendata van de Compain AI-dag. Alleen totalen, geen orders of personen.
+      Omzet is inclusief btw, alleen voltooide orders, geteld op bedrijfsdag. <span id="bijgewerkt"></span></p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
