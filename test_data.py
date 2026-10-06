@@ -4,6 +4,7 @@ Ook het prognosemodel (prognose.js) wordt hier gecontroleerd, via Node.
 Draaien: python -m pytest test_data.py -v   (eerst python maak_data.py)
 De /compainSaveGithub-skill publiceert niet als hier iets faalt.
 """
+import calendar
 import json
 import re
 import shutil
@@ -83,6 +84,37 @@ def test_kanalen_tellen_op_tot_jaartotalen(data, jaar):
     assert sum(k["orders"] for k in kanalen) == kg["orders"]
     assert sum(d(k["omzet"]) for k in kanalen) == d(kg["omzet"])
     assert sum(d(k["commissie"]) for k in kanalen) == d(kg["omzet"]) - d(kg["netto"])
+
+
+@pytest.mark.parametrize("jaar", CONTROLES)
+def test_maanden_tellen_op_tot_jaar(data, jaar):
+    blok = data["per_jaar"][jaar]
+    maanden = blok["maanden"]
+    kg = blok["kerngetallen"]
+    assert len(maanden) == 12
+    assert sum(d(m["kerngetallen"]["omzet"]) for m in maanden) == d(kg["omzet"])
+    assert sum(m["kerngetallen"]["orders"] for m in maanden) == kg["orders"]
+    assert sum(d(m["kerngetallen"]["netto"]) for m in maanden) == d(kg["netto"])
+    for i, m in enumerate(maanden):
+        assert d(m["kerngetallen"]["omzet"]) == d(blok["maand"][i])
+
+
+@pytest.mark.parametrize("jaar", CONTROLES)
+def test_maandblok_klopt_van_binnen(data, jaar):
+    for i, m in enumerate(data["per_jaar"][jaar]["maanden"]):
+        omzet = d(m["kerngetallen"]["omzet"])
+        assert sum(d(w) for w in m["weekdag"]) == omzet
+        assert sum(d(x) for x in m["dagen"]) == omzet
+        assert len(m["dagen"]) == calendar.monthrange(int(jaar), i + 1)[1]
+        assert sum(d(k["omzet"]) for k in m["kanalen"]) == omzet
+        assert sum(k["orders"] for k in m["kanalen"]) == m["kerngetallen"]["orders"]
+        assert sum(d(k["commissie"]) for k in m["kanalen"]) == omzet - d(m["kerngetallen"]["netto"])
+
+
+def test_gesloten_dagen_staan_op_nul(data):
+    # Uit de kalender: dicht op 11-02-2023 (koeling kapot) en 6 en 7 oktober 2024 (verbouwing).
+    assert data["per_jaar"]["2023"]["maanden"][1]["dagen"][10] == 0
+    assert data["per_jaar"]["2024"]["maanden"][9]["dagen"][5:7] == [0, 0]
 
 
 def test_prognose_bouwstenen(data):

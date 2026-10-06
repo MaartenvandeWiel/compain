@@ -83,11 +83,12 @@
 
         <!-- Financieel -->
         <section class="pagina" id="pagina-financieel" hidden>
+          <nav class="maanden" id="maanden" aria-label="Kies een maand"></nav>
           <div class="kerngetallen" id="kerngetallen" aria-label="Kerngetallen"></div>
 
           <section class="kaart kaart-breed">
             <div class="kaart-kop">
-              <h2>Omzet per maand</h2>
+              <h2 id="maand-titel">Omzet per maand</h2>
               <p class="kaart-sub" id="maand-sub"></p>
             </div>
             <div class="grafiek grafiek-maand"><canvas id="grafiek-maand" role="img" aria-label="Omzet per maand"></canvas></div>
@@ -104,7 +105,7 @@
           <section class="kaart kaart-7 kaart-hoog">
             <div class="kaart-kop">
               <h2>Top 10 gerechten</h2>
-              <p class="kaart-sub">Op omzet. Zonder dranken en sauzen.</p>
+              <p class="kaart-sub" id="top-sub">Op omzet. Zonder dranken en sauzen.</p>
             </div>
             <ol class="toplijst" id="top-gerechten"></ol>
           </section>
@@ -112,7 +113,7 @@
           <section class="kaart kaart-5">
             <div class="kaart-kop">
               <h2>Top 3 dranken</h2>
-              <p class="kaart-sub">Geen alcohol. Nooit gehad.</p>
+              <p class="kaart-sub" id="dranken-sub">Geen alcohol. Nooit gehad.</p>
             </div>
             <ol class="dranken" id="top-dranken"></ol>
           </section>

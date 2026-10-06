@@ -7,6 +7,7 @@ Definities (zie ../CLAUDE.md): omzet = som van totaal_incl_btw over orders met s
 jaar, maand en weekdag gaan op bedrijfsdag.
 Gebruik: python maak_data.py   (eerst python laad_database.py in ../sultan-db)
 """
+import calendar
 import json
 import sys
 from datetime import date
@@ -63,6 +64,46 @@ def kanalen(con, filter_sql):
     return [{"kanaal": k, "orders": n, "omzet": euro(o), "commissie": euro(c)} for k, n, o, c in rijen]
 
 
+def per_maand(con, jaar):
+    """Twaalf maandblokken: kerngetallen, weekdag, kanalen en omzet per dag. Dagen zonder omzet (dicht) staan op 0."""
+    filt = f"status = 'voltooid' AND year(bedrijfsdag) = {jaar}"
+    kern = {m: (o, n, c) for m, o, n, c in con.execute(f"""
+        SELECT month(bedrijfsdag), sum(totaal_incl_btw), count(*), sum(platform_commissie)
+        FROM orders WHERE {filt} GROUP BY 1
+    """).fetchall()}
+    weekdag = {(m, d): o for m, d, o in con.execute(f"""
+        SELECT month(bedrijfsdag), isodow(bedrijfsdag), sum(totaal_incl_btw)
+        FROM orders WHERE {filt} GROUP BY 1, 2
+    """).fetchall()}
+    kanaalrijen = con.execute(f"""
+        SELECT month(bedrijfsdag), kanaal, count(*), sum(totaal_incl_btw), sum(platform_commissie)
+        FROM orders WHERE {filt} GROUP BY 1, 2
+    """).fetchall()
+    dagen = {(m, d): o for m, d, o in con.execute(f"""
+        SELECT month(bedrijfsdag), day(bedrijfsdag), sum(totaal_incl_btw)
+        FROM orders WHERE {filt} GROUP BY 1, 2
+    """).fetchall()}
+
+    maanden = []
+    for m in range(1, 13):
+        omzet, orders, commissie = kern.get(m, (0, 0, 0))
+        rijen = sorted((r for r in kanaalrijen if r[0] == m),
+                       key=lambda r: KANAAL_VOLGORDE.index(r[1]) if r[1] in KANAAL_VOLGORDE else len(KANAAL_VOLGORDE))
+        aantal_dagen = calendar.monthrange(jaar, m)[1]
+        maanden.append({
+            "kerngetallen": {
+                "omzet": euro(omzet),
+                "orders": orders,
+                "gem_bon": euro(omzet / orders) if orders else 0.0,
+                "netto": euro(omzet - commissie),
+            },
+            "weekdag": [euro(weekdag.get((m, d))) for d in range(1, 8)],
+            "kanalen": [{"kanaal": k, "orders": n, "omzet": euro(o), "commissie": euro(c)} for _, k, n, o, c in rijen],
+            "dagen": [euro(dagen.get((m, d))) for d in range(1, aantal_dagen + 1)],
+        })
+    return maanden
+
+
 def top_artikelen(con, jaar_filter, gerechten, aantal):
     categorie_sql = "NOT IN" if gerechten else "IN"
     lijst = ", ".join(f"'{c}'" for c in (GEEN_GERECHT if gerechten else ("Dranken",)))
@@ -89,6 +130,7 @@ def per_jaar(con, jaar):
         "maand": [euro(maanden.get(m)) for m in range(1, 13)],
         "weekdag": omzet_per_weekdag(con, filt),
         "kanalen": kanalen(con, filt),
+        "maanden": per_maand(con, jaar),
         "top_gerechten": top_artikelen(con, f"jaar = {jaar}", gerechten=True, aantal=10),
         "top_dranken": top_artikelen(con, f"jaar = {jaar}", gerechten=False, aantal=3),
     }
@@ -164,7 +206,8 @@ def main():
             "prognose": prognose_basis(jaren, jaardata),
         }
     UIT.parent.mkdir(exist_ok=True)
-    UIT.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
+    # Compact: met dagomzet erbij wordt ingesprongen JSON te groot voor de 100 KB-grens in test_data.py.
+    UIT.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     print(f"Klaar: {UIT} ({UIT.stat().st_size // 1024} KB)")
 
 

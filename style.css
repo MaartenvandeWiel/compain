@@ -128,8 +128,8 @@ h3 { font-size: 1rem; font-weight: 800; }
 .paginakop-sub { margin: 4px 0 0; color: var(--tekst-zacht); max-width: 60ch; }
 
 .jaren { display: flex; flex-wrap: wrap; gap: 4px; background: var(--vlak); border: 1px solid var(--lijn); border-radius: var(--radius); padding: 4px; }
-.jaren[hidden] { display: none; }
-.jaren button {
+.jaren[hidden], .maanden[hidden] { display: none; }
+.jaren button, .maanden button {
   font: inherit;
   font-weight: 700;
   border: 0;
@@ -139,9 +139,23 @@ h3 { font-size: 1rem; font-weight: 800; }
   color: var(--tekst);
   cursor: pointer;
 }
-.jaren button:hover { background: var(--accent-zacht); }
-.jaren button[aria-pressed="true"] { background: var(--accent); color: var(--op-accent); }
-.jaren button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.jaren button:hover, .maanden button:hover { background: var(--accent-zacht); }
+.jaren button[aria-pressed="true"], .maanden button[aria-pressed="true"] { background: var(--accent); color: var(--op-accent); }
+.jaren button:focus-visible, .maanden button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Maandfilter op Financieel: Heel jaar + twaalf maanden op één rij, op mobiel in drie rijen. */
+.maanden {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto repeat(12, minmax(0, 1fr));
+  gap: 4px;
+  background: var(--vlak);
+  border: 1px solid var(--lijn);
+  border-radius: var(--radius);
+  padding: 4px;
+}
+.maanden button { padding: 8px 4px; }
+.maanden button:first-child { padding: 8px 14px; }
 
 main[aria-busy="true"] { opacity: 0.4; }
 
@@ -317,6 +331,8 @@ a.module:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; 
   .kerngetal { padding: 14px; }
   .kerngetal-waarde { font-size: 1.5rem; }
   .jaren { width: 100%; }
+  .maanden { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .maanden button:first-child { grid-column: 1 / -1; }
   .jaren button { flex: 1; padding: 8px 4px; }
   .grafiek-maand, .grafiek-jaren { height: 240px; }
   .toplijst .top-cat { display: block; }

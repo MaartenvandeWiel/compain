@@ -1,9 +1,11 @@
 // Sultan command center: leest data/sultan.json (totalen uit de database) en tekent per pagina.
-// Pagina's: #overzicht, #financieel (of #financieel/2024), #prognose. Rekenwerk prognose: prognose.js.
+// Pagina's: #overzicht, #financieel (of #financieel/2024, of #financieel/2024/3 voor maart), #prognose.
+// Rekenwerk prognose: prognose.js.
 (() => {
   "use strict";
 
   const MAANDEN = ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"];
+  const MAANDEN_LANG = ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"];
   const WEEKDAG_KORT = ["ma", "di", "wo", "do", "vr", "za", "zo"];
   const KANAAL_NAAM = {
     "dine-in": "Dine-in",
@@ -24,11 +26,13 @@
   let data = null;
   let pagina = "overzicht";
   let jaar = null;
+  let maand = null; // 1 t/m 12, of null voor het hele jaar
   const grafieken = {};
 
   const $ = (id) => document.getElementById(id);
   const css = (naam) => getComputedStyle(document.documentElement).getPropertyValue(naam).trim();
-  const kort = (n) => (n >= 1000 ? `€${Math.round(n / 1000)}k` : euro0.format(n));
+  // Onder de 10k een decimaal, anders worden stappen van 500 op de dag-as dubbele labels (€3k, €3k).
+  const kort = (n) => (n >= 1000 ? `€${(n / 1000).toLocaleString("nl-NL", { maximumFractionDigits: n < 10000 ? 1 : 0 })}k` : euro0.format(n));
   const kanaalNaam = (k) => KANAAL_NAAM[k] || k;
   const laatsteJaar = () => String(data.jaren.at(-1));
   const somVan = (lijst, veld) => lijst.reduce((t, x) => t + x[veld], 0);
@@ -49,6 +53,20 @@
     return data.per_jaar[String(Number(sleutel) - 1)] || null;
   }
 
+  // Wat Financieel nu laat zien: het jaar, of één maand daarvan. Vorige = zelfde periode een jaar eerder.
+  function selectie(j = jaar) {
+    const b = blok(j);
+    return maand && b?.maanden ? b.maanden[maand - 1] : b;
+  }
+
+  function vorigeSelectie() {
+    return jaar === "alle" ? null : selectie(String(Number(jaar) - 1)) || null;
+  }
+
+  function periode(j = jaar) {
+    return maand ? `${MAANDEN[maand - 1]} ${j}` : String(j);
+  }
+
   function delta(nu, vorig, label) {
     const verschil = nu / vorig - 1;
     return { tekst: `${pct.format(verschil)} t.o.v. ${label}`, klasse: verschil > 0 ? "op" : verschil < 0 ? "neer" : "" };
@@ -65,19 +83,23 @@
   // ---- Navigatie ----
 
   function leesHash() {
-    const [deel, sub] = location.hash.slice(1).split("/");
+    const [deel, sub, m] = location.hash.slice(1).split("/");
     const geldigeJaren = [...data.jaren.map(String), "alle"];
-    if (geldigeJaren.includes(deel)) return { pagina: "financieel", jaar: deel }; // oude links (#2024) blijven werken
+    if (geldigeJaren.includes(deel)) return { pagina: "financieel", jaar: deel, maand: null }; // oude links (#2024) blijven werken
+    const nieuwJaar = geldigeJaren.includes(sub) ? sub : jaar || laatsteJaar();
+    const nieuwMaand = Number(m);
     return {
       pagina: PAGINAS.includes(deel) ? deel : "overzicht",
-      jaar: geldigeJaren.includes(sub) ? sub : jaar || laatsteJaar(),
+      jaar: nieuwJaar,
+      maand: nieuwJaar !== "alle" && nieuwMaand >= 1 && nieuwMaand <= 12 ? nieuwMaand : null,
     };
   }
 
   function ga(nieuw) {
     pagina = nieuw.pagina;
     jaar = nieuw.jaar;
-    const hash = pagina === "financieel" ? `#financieel/${jaar}` : `#${pagina}`;
+    maand = jaar === "alle" ? null : nieuw.maand;
+    const hash = pagina === "financieel" ? `#financieel/${jaar}${maand ? `/${maand}` : ""}` : `#${pagina}`;
     if (location.hash !== hash) history.replaceState(null, "", hash);
 
     for (const p of PAGINAS) $(`pagina-${p}`).hidden = p !== pagina;
@@ -93,7 +115,7 @@
     const p = data.prognose;
     const koppen = {
       overzicht: ["Command center", "Stand van zaken in één scherm. Klik door voor de details."],
-      financieel: ["Financieel", "Omzet, kanalen en wat er over de toonbank gaat. Per jaar of alles samen."],
+      financieel: ["Financieel", "Omzet, kanalen en wat er over de toonbank gaat. Per jaar, per maand of alles samen."],
       prognose: [`Prognose ${p.prognosejaar}`, `Waar ${p.prognosejaar} uitkomt als je niets verandert. Vertrekpunt is ${p.basisjaar}.`],
     };
     $("titel").textContent = koppen[pagina][0];
@@ -228,13 +250,30 @@
       knop.type = "button";
       knop.textContent = sleutel === "alle" ? "Alles" : sleutel;
       knop.setAttribute("aria-pressed", String(sleutel === jaar));
-      knop.addEventListener("click", () => ga({ pagina: "financieel", jaar: sleutel }));
+      knop.addEventListener("click", () => ga({ pagina: "financieel", jaar: sleutel, maand }));
+      nav.appendChild(knop);
+    }
+  }
+
+  function tekenMaanden() {
+    const nav = $("maanden");
+    nav.hidden = jaar === "alle";
+    if (nav.hidden) return;
+    nav.innerHTML = "";
+    for (const m of [null, ...MAANDEN.map((_, i) => i + 1)]) {
+      const knop = document.createElement("button");
+      knop.type = "button";
+      knop.textContent = m ? MAANDEN[m - 1] : "Heel jaar";
+      if (m) knop.setAttribute("aria-label", MAANDEN_LANG[m - 1]);
+      knop.setAttribute("aria-pressed", String(m === maand));
+      knop.addEventListener("click", () => ga({ pagina: "financieel", jaar, maand: m }));
       nav.appendChild(knop);
     }
   }
 
   function tekenFinancieel() {
     tekenJaren();
+    tekenMaanden();
     tekenKerngetallen();
     tekenMaand();
     tekenWeekdag();
@@ -243,8 +282,8 @@
   }
 
   function tekenKerngetallen() {
-    const nu = blok(jaar).kerngetallen;
-    const vorig = vorigJaar(jaar)?.kerngetallen;
+    const nu = selectie().kerngetallen;
+    const vorig = vorigeSelectie()?.kerngetallen;
     const lijst = [
       { label: "Omzet incl. btw", waarde: euro0.format(nu.omzet), sleutel: "omzet" },
       { label: "Orders", waarde: getal.format(nu.orders), sleutel: "orders" },
@@ -253,7 +292,7 @@
     ];
     tegels("kerngetallen", lijst.map((t) => {
       if (vorig) {
-        const d = delta(nu[t.sleutel], vorig[t.sleutel], Number(jaar) - 1);
+        const d = delta(nu[t.sleutel], vorig[t.sleutel], periode(Number(jaar) - 1));
         return { ...t, delta: d.tekst, klasse: d.klasse };
       }
       return { ...t, delta: jaar === "alle" ? `${data.jaren[0]} t/m ${data.jaren.at(-1)}` : "Eerste jaar in de data" };
@@ -263,6 +302,11 @@
   function tekenMaand() {
     const opties = basisOpties();
     const accent = css("--accent");
+    $("maand-titel").textContent = maand ? `Omzet per dag, ${MAANDEN_LANG[maand - 1]} ${jaar}` : "Omzet per maand";
+    if (maand) {
+      tekenDagen(opties, accent);
+      return;
+    }
     if (jaar === "alle") {
       const reeks = data.alle.maand;
       opties.scales.x.ticks = { autoSkip: false, maxRotation: 0, callback: (_, i) => (reeks[i].periode.endsWith("-01") ? reeks[i].periode.slice(0, 4) : "") };
@@ -285,14 +329,43 @@
       sets.push({ type: "line", label: String(Number(jaar) - 1), data: vorig, borderColor: css("--vorig"), backgroundColor: css("--vorig"), borderWidth: 2, pointRadius: 2, tension: 0.3, order: 1 });
       opties.plugins.legend = legendaRechts();
     }
+    // Klik op een maand om erin in te zoomen.
+    opties.onClick = (_, elementen) => {
+      if (elementen.length) ga({ pagina: "financieel", jaar, maand: elementen[0].index + 1 });
+    };
+    opties.onHover = (e, elementen) => { e.native.target.style.cursor = elementen.length ? "pointer" : "default"; };
     vervang("grafiek-maand", { data: { labels: MAANDEN, datasets: sets }, options: opties });
     const sterkst = nu.indexOf(Math.max(...nu));
     const zwakst = nu.indexOf(Math.min(...nu));
-    $("maand-sub").textContent = `Sterkste maand ${MAANDEN[sterkst]}, zwakste ${MAANDEN[zwakst]}.${vorig ? " Lijn is het jaar ervoor." : ""}`;
+    $("maand-sub").textContent = `Sterkste maand ${MAANDEN[sterkst]}, zwakste ${MAANDEN[zwakst]}.${vorig ? " Lijn is het jaar ervoor." : ""} Klik op een maand voor de dagen.`;
+  }
+
+  function tekenDagen(opties, accent) {
+    const dagen = selectie().dagen;
+    const datum = (i) => new Date(Number(jaar), maand - 1, i + 1);
+    const isWeekend = (i) => [5, 6].includes(datum(i).getDay()); // vrijdag en zaterdag, de lange avonden
+    const dagNaam = (i) => datum(i).toLocaleDateString("nl-NL", { weekday: "short", day: "numeric", month: "short" });
+    opties.scales.x.ticks = { maxRotation: 0, autoSkip: true };
+    opties.plugins.tooltip.callbacks.title = (items) => dagNaam(items[0].dataIndex);
+    opties.plugins.tooltip.callbacks.label = (c) => (c.parsed.y === 0 ? " Dicht" : ` Omzet: ${euro0.format(c.parsed.y)}`);
+    vervang("grafiek-maand", {
+      type: "bar",
+      data: {
+        labels: dagen.map((_, i) => String(i + 1)),
+        datasets: [{ label: "Omzet", data: dagen, backgroundColor: dagen.map((_, i) => (isWeekend(i) ? accent : css("--accent-zacht"))), borderRadius: 2 }],
+      },
+      options: opties,
+    });
+    const open = dagen.map((o, i) => [o, i]).filter(([o]) => o > 0);
+    const [besteOmzet, beste] = open.reduce((a, b) => (b[0] > a[0] ? b : a));
+    const [rustigOmzet, rustig] = open.reduce((a, b) => (b[0] < a[0] ? b : a));
+    const dicht = dagen.length - open.length;
+    $("maand-sub").textContent = `Beste dag ${dagNaam(beste)} (${euro0.format(besteOmzet)}), rustigste ${dagNaam(rustig)} (${euro0.format(rustigOmzet)}).` +
+      `${dicht ? ` ${dicht === 1 ? "Eén dag" : `${dicht} dagen`} dicht.` : ""} Donker is vrijdag en zaterdag.`;
   }
 
   function tekenWeekdag() {
-    const reeks = blok(jaar).weekdag;
+    const reeks = selectie().weekdag;
     const opties = basisOpties();
     const accent = css("--accent");
     const zacht = css("--accent-zacht");
@@ -321,6 +394,9 @@
 
   function tekenToplijsten() {
     const b = blok(jaar);
+    const alleenJaar = maand ? ` Hele jaar ${jaar}: per maand zit dit niet in de data.` : "";
+    $("top-sub").textContent = `Op omzet. Zonder dranken en sauzen.${alleenJaar}`;
+    $("dranken-sub").textContent = maand ? `Hele jaar ${jaar}. Geen alcohol, nooit gehad.` : "Geen alcohol. Nooit gehad.";
     const max = b.top_gerechten[0]?.omzet || 1;
     $("top-gerechten").innerHTML = b.top_gerechten.map((g) => regel(g, max)).join("");
     $("top-dranken").innerHTML = b.top_dranken.map((d) => `<li>
@@ -334,7 +410,7 @@
   }
 
   function tekenKanalen() {
-    const lijst = blok(jaar).kanalen;
+    const lijst = selectie().kanalen;
     const omzet = somVan(lijst, "omzet");
     const orders = somVan(lijst, "orders");
     const commissie = somVan(lijst, "commissie");
@@ -460,7 +536,7 @@
 
     window.addEventListener("hashchange", () => {
       const nieuw = leesHash();
-      if (nieuw.pagina !== pagina || nieuw.jaar !== jaar) ga(nieuw);
+      if (nieuw.pagina !== pagina || nieuw.jaar !== jaar || nieuw.maand !== maand) ga(nieuw);
     });
     // Kleuren van de grafieken meenemen als licht/donker wisselt.
     matchMedia("(prefers-color-scheme: dark)").addEventListener("change", tekenPagina);
