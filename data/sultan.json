@@ -48,6 +48,44 @@
     120821.68,
     72359.01
    ],
+   "kanalen": [
+    {
+     "kanaal": "dine-in",
+     "orders": 4310,
+     "omzet": 77915.58,
+     "commissie": 0.0
+    },
+    {
+     "kanaal": "afhaal",
+     "orders": 10698,
+     "omzet": 171614.96,
+     "commissie": 0.0
+    },
+    {
+     "kanaal": "eigen bezorging",
+     "orders": 4707,
+     "omzet": 130226.32,
+     "commissie": 0.0
+    },
+    {
+     "kanaal": "Thuisbezorgd",
+     "orders": 3146,
+     "omzet": 71468.65,
+     "commissie": 19296.51
+    },
+    {
+     "kanaal": "Uber Eats",
+     "orders": 1342,
+     "omzet": 30209.34,
+     "commissie": 9062.88
+    },
+    {
+     "kanaal": "Deliveroo",
+     "orders": 1677,
+     "omzet": 38366.02,
+     "commissie": 11509.67
+    }
+   ],
    "top_gerechten": [
     {
      "naam": "Friet groot",
@@ -160,6 +198,44 @@
     130210.77,
     149546.97,
     83899.84
+   ],
+   "kanalen": [
+    {
+     "kanaal": "dine-in",
+     "orders": 10008,
+     "omzet": 182930.04,
+     "commissie": 0.0
+    },
+    {
+     "kanaal": "afhaal",
+     "orders": 9172,
+     "omzet": 146803.21,
+     "commissie": 0.0
+    },
+    {
+     "kanaal": "eigen bezorging",
+     "orders": 4146,
+     "omzet": 115987.99,
+     "commissie": 0.0
+    },
+    {
+     "kanaal": "Thuisbezorgd",
+     "orders": 3728,
+     "omzet": 88061.84,
+     "commissie": 23776.96
+    },
+    {
+     "kanaal": "Uber Eats",
+     "orders": 1631,
+     "omzet": 37031.61,
+     "commissie": 11109.31
+    },
+    {
+     "kanaal": "Deliveroo",
+     "orders": 1755,
+     "omzet": 39681.87,
+     "commissie": 11904.81
+    }
    ],
    "top_gerechten": [
     {
@@ -274,6 +350,38 @@
     159630.23,
     96452.62
    ],
+   "kanalen": [
+    {
+     "kanaal": "dine-in",
+     "orders": 10764,
+     "omzet": 221716.59,
+     "commissie": 0.0
+    },
+    {
+     "kanaal": "afhaal",
+     "orders": 8559,
+     "omzet": 155031.25,
+     "commissie": 0.0
+    },
+    {
+     "kanaal": "eigen bezorging",
+     "orders": 4010,
+     "omzet": 120627.94,
+     "commissie": 0.0
+    },
+    {
+     "kanaal": "Thuisbezorgd",
+     "orders": 4570,
+     "omzet": 116433.53,
+     "commissie": 31436.93
+    },
+    {
+     "kanaal": "Uber Eats",
+     "orders": 2274,
+     "omzet": 58386.71,
+     "commissie": 17515.84
+    }
+   ],
    "top_gerechten": [
     {
      "naam": "Kapsalon groot",
@@ -387,6 +495,38 @@
     170598.73,
     98453.68
    ],
+   "kanalen": [
+    {
+     "kanaal": "dine-in",
+     "orders": 11003,
+     "omzet": 236078.99,
+     "commissie": 0.0
+    },
+    {
+     "kanaal": "afhaal",
+     "orders": 8778,
+     "omzet": 165248.23,
+     "commissie": 0.0
+    },
+    {
+     "kanaal": "eigen bezorging",
+     "orders": 4371,
+     "omzet": 135855.45,
+     "commissie": 0.0
+    },
+    {
+     "kanaal": "Thuisbezorgd",
+     "orders": 4489,
+     "omzet": 119158.93,
+     "commissie": 32173.27
+    },
+    {
+     "kanaal": "Uber Eats",
+     "orders": 2203,
+     "omzet": 59030.99,
+     "commissie": 17709.48
+    }
+   ],
    "top_gerechten": [
     {
      "naam": "Kapsalon groot",
@@ -499,6 +639,38 @@
     155255.45,
     179938.44,
     110912.57
+   ],
+   "kanalen": [
+    {
+     "kanaal": "dine-in",
+     "orders": 11524,
+     "omzet": 253475.66,
+     "commissie": 0.0
+    },
+    {
+     "kanaal": "afhaal",
+     "orders": 8754,
+     "omzet": 170746.83,
+     "commissie": 0.0
+    },
+    {
+     "kanaal": "eigen bezorging",
+     "orders": 4491,
+     "omzet": 142379.23,
+     "commissie": 0.0
+    },
+    {
+     "kanaal": "Thuisbezorgd",
+     "orders": 4276,
+     "omzet": 118001.47,
+     "commissie": 31860.91
+    },
+    {
+     "kanaal": "Uber Eats",
+     "orders": 2187,
+     "omzet": 60274.41,
+     "commissie": 18082.61
+    }
    ],
    "top_gerechten": [
     {
@@ -842,6 +1014,44 @@
    780536.05,
    462077.72
   ],
+  "kanalen": [
+   {
+    "kanaal": "dine-in",
+    "orders": 47609,
+    "omzet": 972116.86,
+    "commissie": 0.0
+   },
+   {
+    "kanaal": "afhaal",
+    "orders": 45961,
+    "omzet": 809444.48,
+    "commissie": 0.0
+   },
+   {
+    "kanaal": "eigen bezorging",
+    "orders": 21725,
+    "omzet": 645076.93,
+    "commissie": 0.0
+   },
+   {
+    "kanaal": "Thuisbezorgd",
+    "orders": 20209,
+    "omzet": 513124.42,
+    "commissie": 138544.58
+   },
+   {
+    "kanaal": "Uber Eats",
+    "orders": 9637,
+    "omzet": 244933.06,
+    "commissie": 73480.12
+   },
+   {
+    "kanaal": "Deliveroo",
+    "orders": 3432,
+    "omzet": 78047.89,
+    "commissie": 23414.48
+   }
+  ],
   "top_gerechten": [
    {
     "naam": "Kapsalon groot",
@@ -924,5 +1134,66 @@
     "omzet": 52583.9
    }
   ]
+ },
+ "prognose": {
+  "basisjaar": 2025,
+  "prognosejaar": 2026,
+  "kanalen": [
+   {
+    "kanaal": "dine-in",
+    "orders": 11524,
+    "omzet": 253475.66,
+    "commissie": 0.0
+   },
+   {
+    "kanaal": "afhaal",
+    "orders": 8754,
+    "omzet": 170746.83,
+    "commissie": 0.0
+   },
+   {
+    "kanaal": "eigen bezorging",
+    "orders": 4491,
+    "omzet": 142379.23,
+    "commissie": 0.0
+   },
+   {
+    "kanaal": "Thuisbezorgd",
+    "orders": 4276,
+    "omzet": 118001.47,
+    "commissie": 31860.91
+   },
+   {
+    "kanaal": "Uber Eats",
+    "orders": 2187,
+    "omzet": 60274.41,
+    "commissie": 18082.61
+   }
+  ],
+  "seizoen": [
+   0.080015,
+   0.072613,
+   0.08013,
+   0.078928,
+   0.090965,
+   0.084391,
+   0.083453,
+   0.077485,
+   0.088188,
+   0.081493,
+   0.09158,
+   0.090758
+  ],
+  "seizoen_jaren": [
+   2023,
+   2024,
+   2025
+  ],
+  "groei": {
+   "basis": 0.0086,
+   "laag": -0.0086,
+   "hoog": 0.0221,
+   "vanaf": 2022
+  }
  }
 }

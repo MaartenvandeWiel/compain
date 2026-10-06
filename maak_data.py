@@ -21,6 +21,9 @@ UIT = HIER / "data" / "sultan.json"
 
 WEEKDAGEN = ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"]
 GEEN_GERECHT = ("Dranken", "Sauzen")
+KANAAL_VOLGORDE = ["dine-in", "afhaal", "eigen bezorging", "Thuisbezorgd", "Uber Eats", "Deliveroo"]
+# Seizoen en ordergroei voor de prognose: alleen jaren na de lockdowns van 2021 en begin 2022.
+EERSTE_NORMALE_JAAR = 2023
 
 
 def euro(waarde):
@@ -50,6 +53,16 @@ def omzet_per_weekdag(con, filter_sql):
     return [euro(rijen.get(i + 1)) for i in range(7)]
 
 
+def kanalen(con, filter_sql):
+    rijen = con.execute(f"""
+        SELECT kanaal, count(*), sum(totaal_incl_btw), sum(platform_commissie)
+        FROM orders WHERE status = 'voltooid' AND {filter_sql}
+        GROUP BY 1
+    """).fetchall()
+    rijen.sort(key=lambda r: KANAAL_VOLGORDE.index(r[0]) if r[0] in KANAAL_VOLGORDE else len(KANAAL_VOLGORDE))
+    return [{"kanaal": k, "orders": n, "omzet": euro(o), "commissie": euro(c)} for k, n, o, c in rijen]
+
+
 def top_artikelen(con, jaar_filter, gerechten, aantal):
     categorie_sql = "NOT IN" if gerechten else "IN"
     lijst = ", ".join(f"'{c}'" for c in (GEEN_GERECHT if gerechten else ("Dranken",)))
@@ -75,6 +88,7 @@ def per_jaar(con, jaar):
         "kerngetallen": kerngetallen(con, filt),
         "maand": [euro(maanden.get(m)) for m in range(1, 13)],
         "weekdag": omzet_per_weekdag(con, filt),
+        "kanalen": kanalen(con, filt),
         "top_gerechten": top_artikelen(con, f"jaar = {jaar}", gerechten=True, aantal=10),
         "top_dranken": top_artikelen(con, f"jaar = {jaar}", gerechten=False, aantal=3),
     }
@@ -90,8 +104,45 @@ def alle_jaren(con):
         "kerngetallen": kerngetallen(con, "true"),
         "maand": [{"periode": p, "omzet": euro(o)} for p, o in maanden],
         "weekdag": omzet_per_weekdag(con, "true"),
+        "kanalen": kanalen(con, "true"),
         "top_gerechten": top_artikelen(con, "true", gerechten=True, aantal=10),
         "top_dranken": top_artikelen(con, "true", gerechten=False, aantal=3),
+    }
+
+
+def prognose_basis(jaren, per_jaar_data):
+    """Bouwstenen voor de prognose. Het rekenen zelf gebeurt in prognose.js, zodat hefbomen er later op kunnen inhaken.
+
+    - kanalen: orders, omzet en commissie van het laatste jaar, het vertrekpunt
+    - seizoen: aandeel van elke maand in de jaaromzet, gemiddeld over de normale jaren
+    - groei: jaarlijkse ordergroei. Basis = gemiddelde groei per jaar sinds het laatste lockdownjaar,
+      laag en hoog = het slechtste en beste losse jaar
+    """
+    basisjaar = jaren[-1]
+    normaal = [j for j in jaren if j >= EERSTE_NORMALE_JAAR]
+    orders = {j: per_jaar_data[str(j)]["kerngetallen"]["orders"] for j in jaren}
+    groei_per_jaar = [orders[j] / orders[j - 1] - 1 for j in normaal]
+    gemiddeld = (orders[basisjaar] / orders[normaal[0] - 1]) ** (1 / len(normaal)) - 1
+
+    aandelen = []
+    for j in normaal:
+        maanden = per_jaar_data[str(j)]["maand"]
+        totaal = sum(maanden)
+        aandelen.append([m / totaal for m in maanden])
+    seizoen = [sum(a[m] for a in aandelen) / len(aandelen) for m in range(12)]
+
+    return {
+        "basisjaar": basisjaar,
+        "prognosejaar": basisjaar + 1,
+        "kanalen": per_jaar_data[str(basisjaar)]["kanalen"],
+        "seizoen": [round(x, 6) for x in seizoen],
+        "seizoen_jaren": normaal,
+        "groei": {
+            "basis": round(gemiddeld, 4),
+            "laag": round(min(groei_per_jaar), 4),
+            "hoog": round(max(groei_per_jaar), 4),
+            "vanaf": normaal[0] - 1,
+        },
     }
 
 
@@ -102,13 +153,15 @@ def main():
         jaren = [r[0] for r in con.execute("""
             SELECT DISTINCT year(bedrijfsdag) FROM orders ORDER BY 1
         """).fetchall()]
+        jaardata = {str(j): per_jaar(con, j) for j in jaren}
         data = {
             "bron": "Grillroom Sultan, synthetische oefendata van de Compain AI-dag",
             "bijgewerkt": date.today().isoformat(),
             "weekdagen": WEEKDAGEN,
             "jaren": jaren,
-            "per_jaar": {str(j): per_jaar(con, j) for j in jaren},
+            "per_jaar": jaardata,
             "alle": alle_jaren(con),
+            "prognose": prognose_basis(jaren, jaardata),
         }
     UIT.parent.mkdir(exist_ok=True)
     UIT.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")

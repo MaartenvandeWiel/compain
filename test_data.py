@@ -1,10 +1,13 @@
 """Poort voor publicatie: data/sultan.json moet kloppen en mag alleen totalen bevatten.
+Ook het prognosemodel (prognose.js) wordt hier gecontroleerd, via Node.
 
 Draaien: python -m pytest test_data.py -v   (eerst python maak_data.py)
 De /compainSaveGithub-skill publiceert niet als hier iets faalt.
 """
 import json
 import re
+import shutil
+import subprocess
 from decimal import Decimal
 from pathlib import Path
 
@@ -71,6 +74,55 @@ def test_toplijsten(data):
         assert len(blok["top_gerechten"]) == 10 and len(blok["top_dranken"]) == 3
         assert all(g["categorie"] not in ("Dranken", "Sauzen") for g in blok["top_gerechten"])
         assert all(g["categorie"] == "Dranken" for g in blok["top_dranken"])
+
+
+@pytest.mark.parametrize("jaar", CONTROLES)
+def test_kanalen_tellen_op_tot_jaartotalen(data, jaar):
+    kg = data["per_jaar"][jaar]["kerngetallen"]
+    kanalen = data["per_jaar"][jaar]["kanalen"]
+    assert sum(k["orders"] for k in kanalen) == kg["orders"]
+    assert sum(d(k["omzet"]) for k in kanalen) == d(kg["omzet"])
+    assert sum(d(k["commissie"]) for k in kanalen) == d(kg["omzet"]) - d(kg["netto"])
+
+
+def test_prognose_bouwstenen(data):
+    p = data["prognose"]
+    assert p["basisjaar"] == data["jaren"][-1] and p["prognosejaar"] == p["basisjaar"] + 1
+    assert p["kanalen"] == data["per_jaar"][str(p["basisjaar"])]["kanalen"]
+    assert len(p["seizoen"]) == 12 and abs(sum(p["seizoen"]) - 1) < 1e-5
+    g = p["groei"]
+    assert g["laag"] <= g["basis"] <= g["hoog"]
+
+
+def node_bereken(instellingen):
+    """Draait prognose.js in Node, precies zoals de browser hem gebruikt."""
+    node = shutil.which("node")
+    if not node:
+        pytest.fail("node ontbreekt, nodig om prognose.js te controleren")
+    script = ("const P = require('./prognose.js'); const d = require('./data/sultan.json');"
+              f"console.log(JSON.stringify(P.bereken(d.prognose, {json.dumps(instellingen)})));")
+    uit = subprocess.run([node, "-e", script], cwd=HIER, capture_output=True, text=True, check=True)
+    return json.loads(uit.stdout)
+
+
+def test_prognose_zonder_groei_is_basisjaar(data):
+    kg = data["per_jaar"][str(data["prognose"]["basisjaar"])]["kerngetallen"]
+    p = node_bereken({"groei": 0, "prijs": 0})
+    assert abs(p["omzet"] - kg["omzet"]) < 0.01
+    assert abs(p["orders"] - kg["orders"]) < 1e-6
+    assert abs(p["netto"] - kg["netto"]) < 0.01
+    assert abs(sum(p["maand"]) - p["omzet"]) < 0.01
+
+
+def test_prognose_groei_en_prijs_werken_door(data):
+    kg = data["per_jaar"][str(data["prognose"]["basisjaar"])]["kerngetallen"]
+    g = data["prognose"]["groei"]["basis"]
+    basis = node_bereken({})
+    assert abs(basis["omzet"] - kg["omzet"] * (1 + g)) < 0.01
+    assert abs(basis["orders"] - kg["orders"] * (1 + g)) < 1e-6
+    duurder = node_bereken({"prijs": 0.05})
+    assert abs(duurder["omzet"] - basis["omzet"] * 1.05) < 0.01
+    assert abs(duurder["orders"] - basis["orders"]) < 1e-6
 
 
 def test_alleen_totalen_geen_persoons_of_ordergegevens(data):

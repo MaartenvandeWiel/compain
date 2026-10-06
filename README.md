@@ -1,6 +1,11 @@
-# Grillroom Sultan, dashboard
+# Grillroom Sultan, command center
 
-Dashboard met de omzet van Grillroom Sultan: vier kerngetallen, omzet per maand, omzet per weekdag, top 10 gerechten en top 3 dranken. Per jaar te bekijken (2021 t/m 2025) of alles samen.
+Command center van Grillroom Sultan, met een menu links (op mobiel bovenin):
+
+- **Overzicht** (`#overzicht`): stand van zaken, omzet per jaar met prognose, wat opvalt in de cijfers en welke modules er zijn.
+- **Financieel** (`#financieel/2025`): het oorspronkelijke dashboard. Kerngetallen, omzet per maand en weekdag, top 10 gerechten, top 3 dranken en omzet per kanaal. Per jaar (2021 t/m 2025) of alles samen.
+- **Prognose** (`#prognose`): waar volgend jaar uitkomt bij ongewijzigd beleid, per maand en per kanaal, met bandbreedte.
+- **Hefbomen** (in aanbouw): knoppen die de prognose bewegen, zoals een prijsstap of platformorders naar eigen bezorging.
 
 Gebouwd op de AI-dag van Compain (6 oktober 2026). **De data is synthetisch.** Grillroom Sultan bestaat niet.
 
@@ -9,6 +14,7 @@ Gebouwd op de AI-dag van Compain (6 oktober 2026). **De data is synthetisch.** G
 - De brondata staat in een lokale DuckDB-database en gaat niet online.
 - `maak_data.py` rekent alleen totalen uit en schrijft die naar `data/sultan.json`. Geen orders, geen klanten, geen medewerkers.
 - `test_data.py` controleert de totalen tot op de cent en checkt dat er geen order- of persoonsgegevens in de JSON zitten. Faalt de test, dan wordt er niet gepubliceerd.
+- `prognose.js` is het rekenmodel: vertrekpunt is het laatste jaar per kanaal, daarop ordergroei, prijsstap en seizoenspatroon. Geen DOM, dus het draait ook in Node. Hefbomen komen hier straks als extra instellingen bij. `test_data.py` controleert het model via Node.
 - `index.html`, `app.js` en `style.css` lezen die JSON en tekenen het dashboard (Chart.js). Geen build-stap, gewoon een statische site op GitHub Pages.
 
 ## Definities
@@ -17,6 +23,7 @@ Gebouwd op de AI-dag van Compain (6 oktober 2026). **De data is synthetisch.** G
 - Jaar, maand en weekdag gaan op bedrijfsdag. Een order op zaterdag 01:30 telt bij vrijdag.
 - Netto = omzet min de commissie van Thuisbezorgd en Uber Eats.
 - Top 10 gerechten zonder dranken en sauzen, op omzet.
+- Prognose: ordergroei = gemiddelde groei per jaar sinds 2022 (laag en hoog = slechtste en beste losse jaar), prijzen en kanaalmix gelijk aan het laatste jaar, seizoen = gemiddelde van 2023 t/m 2025. 2021 en 2022 tellen voor het seizoen niet mee vanwege de lockdowns.
 
 ## Lokaal bekijken
 
